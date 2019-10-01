@@ -3,26 +3,26 @@
 }
 
 .logo {
-  padding: 10px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 
   .title {
     color: white;
     text-align: center;
-    font-size: 18px;
     color: $primary;
+    font-size: 2rem;
   }
 
   svg {
-    height: 70px;
+    height: 7rem;
     width: 100%;
   }
 }
 
 .ant-menu-item {
   border-radius: 5px !important;
-  margin: 10px !important;
+  margin: 1rem !important;
 
   &-selected {
     background-color: #455361 !important;
