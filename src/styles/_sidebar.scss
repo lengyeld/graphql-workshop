@@ -1,0 +1,30 @@
+.sider {
+  min-height: 100vh;
+}
+
+.logo {
+  padding: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+  .title {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    color: $primary;
+  }
+
+  svg {
+    height: 70px;
+    width: 100%;
+  }
+}
+
+.ant-menu-item {
+  border-radius: 5px !important;
+  margin: 10px !important;
+
+  &-selected {
+    background-color: #455361 !important;
+  }
+}
