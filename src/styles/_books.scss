@@ -1,0 +1,29 @@
+.book__card {
+  .anticon-delete:hover {
+    color: red !important;
+  }
+
+  border-radius: 5px !important;
+  // margin: 3rem;
+
+  .ant-card-actions {
+    border-radius: 5px !important;
+  }
+}
+
+.load-more {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.loading{
+  display: flex;
+  justify-content: center;
+}
+
+// .books {
+//   display: flex;
+//   justify-content: center;
+// }
