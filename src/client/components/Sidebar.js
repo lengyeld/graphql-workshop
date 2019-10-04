@@ -4,9 +4,9 @@ import { Link, withRouter } from 'react-router-dom'
 import { Layout } from 'antd'
 import Logo from './Logo'
 
-const Sidebar = ({ location }) => {
+const Sidebar = ({ location, hide }) => {
   return (
-    <Layout.Sider className="sider">
+    <Layout.Sider className={hide ? 'sider sider--hide' : 'sider'}>
       <Logo />
 
       <Menu theme="dark" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]}>

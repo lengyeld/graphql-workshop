@@ -4,21 +4,23 @@ import { Layout } from 'antd'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import BooksPage from './books/BooksPage'
+import DashboardPage from './dashboard/DashboardPage'
+import AuthorsPage from './authors/AuthorsPage'
 
 const App = () => {
   return (
-    <Layout>
-      <Router>
+    <Router>
+      <Layout hasSider>
         <Sidebar />
         <Layout>
           <Layout.Content>
-            <Route exact path="/" component={() => 'DASHBOARD'} />
+            <Route exact path="/" component={DashboardPage} />
             <Route path="/books" component={BooksPage} />
-            <Route path="/authors" component={() => 'AUTHORS'} />
+            <Route path="/authors" component={AuthorsPage} />
           </Layout.Content>
         </Layout>
-      </Router>
-    </Layout>
+      </Layout>
+    </Router>
   )
 }
 
