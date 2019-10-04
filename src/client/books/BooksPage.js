@@ -76,7 +76,9 @@ const BooksPage = () => {
 
   return (
     <div className="page">
-      <PageHeader title="Books" extra={[<Button type="primary" icon="plus" key="add_button">New Book</Button>]} />
+      <PageHeader title="Books" extra={[
+        <Button type="primary" icon="plus" key="add_button" onClick={() => openModal()}>New Book</Button>
+      ]} />
 
       <BooksPageContent loading={loading} books={books} openModal={openModal} loadMore={loadMore} />
 
