@@ -1,37 +1,25 @@
 import React from 'react'
 import { Card, Icon, Modal, message } from 'antd'
 
-const deleteBook = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve()
-      message.success('Deleted successfully')
-    }, 1000)
-  })
-}
-
-const showConfirm = () => {
-  Modal.confirm({
-    title: 'Are you sure you want to delete this book?',
-    onOk: () => deleteBook(),
-    onCancel() { },
-  });
-}
-
 const BookCard = ({ book, openBookModal }) => {
-  const description = (
-    <div>
-      <div>Written by {book.author}</div>
-      <div>Released in {book.releaseDate}</div>
-    </div>
-  )
+  const deleteBook = () => {
+    // useMutation
+    
+    Modal.confirm({
+      title: 'Are you sure you want to delete this book?',
+      onOk: () => {
+        // delete book
+        message.success('Deleted successfully')
+      },
+    });
+  }
 
   return (
     <Card className="book__card" bordered={false} actions={[
       <Icon type="edit" key="edit" onClick={() => openBookModal(book)} />,
-      <Icon filled="red" type="delete" key="delete" onClick={() => showConfirm()} />
+      <Icon filled="red" type="delete" key="delete" onClick={() => deleteBook()} />
     ]}>
-      <Card.Meta title={book.title} description={description} />
+      <Card.Meta title={book.title} description={(<div>Written by {book.author.name}</div>)} />
     </Card>
   )
 }

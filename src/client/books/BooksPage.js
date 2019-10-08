@@ -1,78 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { PageHeader, Button, message } from 'antd'
+import React from 'react'
+import { PageHeader, Button } from 'antd'
 import BooksPageContent from './BooksPageContent'
 import BookModal from './BookModal'
-import useModal from './useModal'
-
-const response = [
-  {
-    id: 1,
-    title: 'Harry Potter',
-    author: 'J. K. Rowling',
-    releaseDate: 2019
-  },
-  {
-    id: 2,
-    title: 'Harry Potter 2',
-    author: 'J. K. Rowling',
-    releaseDate: 2018
-  },
-  {
-    id: 3,
-    title: 'Harry Potter 2',
-    author: 'J. K. Rowling',
-    releaseDate: 2018
-  },
-  {
-    id: 4,
-    title: 'Harry Potter 2',
-    author: 'J. K. Rowling',
-    releaseDate: 2018
-  }
-]
+import useModal from '../hooks/useModal'
 
 const BooksPage = () => {
-  const [loading, setLoading] = useState(false)
-  const [books, setBooks] = useState([])
+  const { visible, modalData, openModal, closeModal } = useModal()
 
-  const { visible, modalData, openModal, closeModal, modalLoading, setModalLoading } = useModal()
-
-  const saveBook = () => {
-    setModalLoading(true)
-
-    setTimeout(() => {
-      setModalLoading(false)
-      message.success('Saved successfully')
-      closeModal()
-    }, 1000)
-  }
-
-  const loadMore = () => {
-    setLoading(true)
-
-    setTimeout(() => {
-      const newBooks = []
-      for (let index = 0; index < 4; index++) {
-        newBooks.push({
-          id: Math.random(),
-          title: 'Harry Potter',
-          author: 'J. K. Rowling',
-          releaseDate: 2019
-        })
-        
-      }
-      setBooks(state => [...state, ...newBooks])
-      setLoading(false)
-    }, 1000)
-  }
-
-  useEffect(() => {
-    setLoading(true)
-    setTimeout(() => {
-      setBooks(response)
-      setLoading(false)
-    }, 1000);
-  }, [])
+  // useQuery
+  const books = [{title: "Title", author: {name: 'Author'}}]
+  const booksLoading = false
+  const loadMore = () => console.log('load more')
 
   return (
     <div className="page">
@@ -80,9 +18,9 @@ const BooksPage = () => {
         <Button type="primary" icon="plus" key="add_button" onClick={() => openModal()}>New Book</Button>
       ]} />
 
-      <BooksPageContent loading={loading} books={books} openModal={openModal} loadMore={loadMore} />
+      <BooksPageContent loading={booksLoading} books={books} openModal={openModal} loadMore={loadMore} />
 
-      <BookModal visible={visible} onCancel={closeModal} onOk={saveBook} book={modalData} loading={modalLoading} />
+      <BookModal visible={visible} onCancel={() => closeModal()} book={modalData} />
     </div>
   )
 }

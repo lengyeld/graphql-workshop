@@ -1,19 +1,31 @@
 import React, { useRef, useState } from 'react'
-import { Modal, Input, Form } from 'antd'
+import { Modal, Input, Form, message } from 'antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 const bookSchema = Yup.object().shape(
   {
     title: Yup.string().required('You must provide the title of the book'),
-    author: Yup.string(),
-    releaseDate: Yup.number()
+    author: Yup.object().shape({
+      name: Yup.string()
+    })
   }
 )
 
-const BookModal = ({ visible, onOk, onCancel, book, loading }) => {
+const BookModal = ({ visible, onCancel, book }) => {
   const [isValid, setIsValid] = useState(false)
   const formRef = useRef()
+
+  // useMutation
+  let loading
+
+  const saveBook = () => {
+    setTimeout(() => {
+      // update book if book.id
+      // create book if !book
+      message.success('Saved successfully')
+    }, 1000)
+  }
 
   return (
     <Modal
@@ -26,11 +38,10 @@ const BookModal = ({ visible, onOk, onCancel, book, loading }) => {
       okText="Save"
     >
       <Formik
-        initialValues={{ ...book }}
-        enableReinitialize
+        initialValues={book}
         onSubmit={(values, actions) => {
           actions.setSubmitting(false)
-          onOk(values)
+          saveBook(values)
         }}
         ref={formRef}
         validationSchema={bookSchema}
@@ -54,26 +65,15 @@ const BookModal = ({ visible, onOk, onCancel, book, loading }) => {
                   onBlur={handleBlur}
                   value={values.title}
                 />
-
               </Form.Item>
 
-              <Form.Item label="Author" hasFeedback validateStatus={errors.author && touched.author ? 'error' : ''}>
+              <Form.Item label="Author" hasFeedback validateStatus={errors.author && errors.author.name && touched.author ? 'error' : ''}>
                 <Input
                   type="text"
-                  name="author"
+                  name="author.name"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.author}
-                />
-              </Form.Item>
-
-              <Form.Item label="Released In" hasFeedback validateStatus={errors.releaseDate && touched.releaseDate ? 'error' : ''}>
-                <Input
-                  type="number"
-                  name="releaseDate"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.releaseDate}
+                  value={values.author ? values.author.name : null}
                 />
               </Form.Item>
             </Form>

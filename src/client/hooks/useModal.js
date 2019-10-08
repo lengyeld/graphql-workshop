@@ -3,11 +3,10 @@ import { useState, useCallback } from "react"
 const useModal = () => {
   const [visible, setVisible] = useState(false)
   const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(false)
 
-  const openModal = useCallback(data => {
+  const openModal = useCallback(modalData => {
     setVisible(true)
-    setData(data)
+    setData(modalData)
   }, [])
   const closeModal = useCallback(() => setVisible(false), [])
 
@@ -15,9 +14,7 @@ const useModal = () => {
     visible,
     modalData: data,
     openModal,
-    closeModal,
-    modalLoading: loading,
-    setModalLoading: setLoading
+    closeModal
   }
 }
 
