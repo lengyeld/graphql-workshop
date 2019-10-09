@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageHeader, Button } from 'antd'
+import { PageHeader, Button, message } from 'antd'
 import BooksPageContent from './BooksPageContent'
 import BookModal from './BookModal'
 import useModal from '../hooks/useModal'
@@ -8,9 +8,23 @@ const BooksPage = () => {
   const { visible, modalData, openModal, closeModal } = useModal()
 
   // useQuery
-  const books = [{title: "Title", author: {name: 'Author'}}]
+  const books = [
+    {
+      title: "Title",
+      author: {
+        id: 1, 
+        name: 'Natalia Orose'
+      }
+    }
+  ]
   const booksLoading = false
   const loadMore = () => console.log('load more')
+
+  const afterSave = () => {
+    closeModal()
+    message.success('Saved successfully')
+    // refetch
+}
 
   return (
     <div className="page">
@@ -20,7 +34,7 @@ const BooksPage = () => {
 
       <BooksPageContent loading={booksLoading} books={books} openModal={openModal} loadMore={loadMore} />
 
-      <BookModal visible={visible} onCancel={() => closeModal()} book={modalData} />
+      <BookModal visible={visible} book={modalData} onCancel={closeModal} afterSave={afterSave}  />
     </div>
   )
 }

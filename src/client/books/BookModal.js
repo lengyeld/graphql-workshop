@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Modal, Input, Form, message } from 'antd'
+import { Modal, Input, Form, Select } from 'antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
@@ -7,23 +7,35 @@ const bookSchema = Yup.object().shape(
   {
     title: Yup.string().required('You must provide the title of the book'),
     author: Yup.object().shape({
-      name: Yup.string()
+      id: Yup.number()
     })
   }
 )
 
-const BookModal = ({ visible, onCancel, book }) => {
+const BookModal = ({ visible, book, onCancel, afterSave  }) => {
   const [isValid, setIsValid] = useState(false)
   const formRef = useRef()
 
   // useMutation
   let loading
 
-  const saveBook = () => {
+  // useQuery
+  const authors = [
+    {
+      id: 1,
+      name: 'Natalia Orose'
+    }
+  ]
+
+  const saveBook = (values) => {
     setTimeout(() => {
       // update book if book.id
       // create book if !book
-      message.success('Saved successfully')
+      const title = values.title
+      const authorId = values.author.id
+
+      console.log(title, authorId)
+      afterSave()
     }, 1000)
   }
 
@@ -56,7 +68,7 @@ const BookModal = ({ visible, onCancel, book }) => {
         }) => {
           setIsValid(isValid)
           return (
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} layout="vertical">
               <Form.Item label="Title" help={touched.title ? errors.title : ''} required={true} hasFeedback validateStatus={errors.title && touched.title ? 'error' : ''}>
                 <Input
                   type="text"
@@ -67,14 +79,24 @@ const BookModal = ({ visible, onCancel, book }) => {
                 />
               </Form.Item>
 
-              <Form.Item label="Author" hasFeedback validateStatus={errors.author && errors.author.name && touched.author ? 'error' : ''}>
-                <Input
-                  type="text"
-                  name="author.name"
-                  onChange={handleChange}
+              <Form.Item label="Author" hasFeedback validateStatus={errors.author && touched.author ? 'error' : ''}>
+                <Select
+                  name="author.id"
+                  // AntD's select doesn't give you the original event
+                  // but handleChange expects an event
+                  // so as a workaround I give it an event like object
+                  // https://github.com/JedWatson/react-select/issues/1631
+                  onChange={(value) => {
+                    handleChange({target: {value, name: 'author.id'}})
+                  }}
                   onBlur={handleBlur}
-                  value={values.author ? values.author.name : null}
-                />
+                  value={values.author ? values.author.id : null}
+                  allowClear
+                >
+                  {authors.map(author => (
+                    <Select.Option key={author.id} value={author.id}>{author.name}</Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Form>
           )
