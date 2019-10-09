@@ -8,7 +8,7 @@ const BooksPage = () => {
   const { visible, modalData, openModal, closeModal } = useModal()
 
   // useQuery
-  const books = [{title: "Title", author: {name: 'Author'}}]
+  const books = [{title: "Title", author: {id: 1, name: 'Natalia Orose'}}]
   const booksLoading = false
   const loadMore = () => console.log('load more')
 
