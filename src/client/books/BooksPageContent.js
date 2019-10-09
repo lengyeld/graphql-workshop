@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, List, Empty, Spin, Pagination } from 'antd'
+import { List, Empty, Spin, Pagination } from 'antd'
 import BookCard from './BookCard'
 
 const BooksPageContent = ({ loading, books, openModal, changePage, pagination }) => {

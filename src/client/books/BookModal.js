@@ -29,7 +29,7 @@ const BookModal = ({ visible, book, onCancel, afterSave  }) => {
 
   const saveBook = (values) => {
     setTimeout(() => {
-      // update book if book.id
+      // update book if book && book.id
       // create book if !book
       const title = values.title
       const authorId = values.author.id
