@@ -23,6 +23,16 @@ const books = [
     id: 5,
     title: 'Clue of the Hollow Violin',
     authorId: 2
+  },
+  {
+    id: 6,
+    title: 'Secret of the Three-Inch Conductor',
+    authorId: 2
+  },
+  {
+    id: 7,
+    title: 'Rules and Roses',
+    authorId: 1
   }
 ]
 

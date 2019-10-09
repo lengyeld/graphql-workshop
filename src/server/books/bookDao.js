@@ -2,14 +2,20 @@ import books from '../db/books'
 
 export function getBooks(pagination) {
   if (!pagination) {
-    return books
+    return {
+      list: books,
+      total: books.length
+    }
   }
 
   const { page, limit } = pagination
   const start = (page - 1) * limit
   const end = page * limit
   
-  return books.slice(start, end)
+  return {
+    list: books.slice(start, end),
+    total: books.length
+  }
 }
 
 export function getBook(id) {
@@ -20,7 +26,7 @@ export function updateBook(id, input) {
   const book = getBook(Number(id))
 
   book.title = input.title
-  book.authorId = input.authorId
+  book.authorId = Number(input.authorId)
 
   return true
 }

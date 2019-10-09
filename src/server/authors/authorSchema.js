@@ -5,5 +5,9 @@ const authorSchema = gql`
     id: ID,
     name: String
   }
+
+  extend type Query {
+    authors: [Author]
+  }
 `
 export default authorSchema

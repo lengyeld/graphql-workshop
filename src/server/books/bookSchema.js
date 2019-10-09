@@ -7,13 +7,18 @@ const bookSchema = gql`
     author: Author
   }
 
+  type PaginatedBook {
+    total: Int,
+    list: [Book]
+  }
+
   input BookInput {
     title: String,
     authorId: ID
   }
 
   extend type Query {
-    books(pagination: Pagination): [Book]
+    books(pagination: Pagination): PaginatedBook
   }
 
   extend type Mutation {

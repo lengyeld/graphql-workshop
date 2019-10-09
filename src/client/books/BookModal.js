@@ -2,6 +2,9 @@ import React, { useRef, useState } from 'react'
 import { Modal, Input, Form, message, Select } from 'antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { GET_AUTHORS } from '../authors/authorQueries'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import { UPDATE_BOOK } from './bookQueries'
 
 const bookSchema = Yup.object().shape(
   {
@@ -12,31 +15,29 @@ const bookSchema = Yup.object().shape(
   }
 )
 
-const BookModal = ({ visible, onCancel, book }) => {
+const BookModal = ({ visible, onCancel, onOk, book }) => {
   const [isValid, setIsValid] = useState(false)
   const formRef = useRef()
 
-  // useMutation
-  let loading
+  const [updateBook, {loading} ] = useMutation(UPDATE_BOOK)
 
-  // useQuery
-  const authors = [
-    {
-      id: 1,
-      name: 'Natalia Orose'
-    }
-  ]
+  const {loading: authorsLoading, data} = useQuery(GET_AUTHORS)
+  const authors = data ? data.authors : []
 
   const saveBook = (values) => {
-    setTimeout(() => {
-      // update book if book.id
-      // create book if !book
-      const input = {
-        title: values.title,
-        authorId: values.author.id
-      }
-      message.success('Saved successfully')
-    }, 1000)
+    const title = values.title
+    const authorId = values.author.id
+
+    // update book if book.id
+    if (book && book.id) {
+      updateBook({variables: {id: book.id, title, authorId}}).then(() => {
+        onOk()
+      })
+    } else {
+      onOk()
+    }
+
+    // create book if !book
   }
 
   return (
@@ -92,6 +93,7 @@ const BookModal = ({ visible, onCancel, book }) => {
                   onBlur={handleBlur}
                   value={values.author ? values.author.id : null}
                   allowClear
+                  loading={authorsLoading}
                 >
                   {authors.map(author => (
                     <Select.Option key={author.id} value={author.id}>{author.name}</Select.Option>
