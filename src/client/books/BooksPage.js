@@ -28,7 +28,6 @@ const BooksPage = () => {
   ]
   const total = 5
   const booksLoading = false
-  const loadMore = () => console.log('load more')
 
   const afterSave = () => {
     closeModal()
@@ -46,7 +45,6 @@ const BooksPage = () => {
         loading={booksLoading}
         books={books}
         openModal={openModal}
-        loadMore={loadMore}
         changePage={changePage}
         pagination={{page, limit, total}}
       />
